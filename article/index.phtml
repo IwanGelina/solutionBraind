@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Статьи</title>
+</head>
+<body>
+<?php
+//подключение файла с классом
+include_once 'ArrayStorage.php';
+
+// создание объекта класса с массивом и получение массива
+$objArr = new ArrayStorage();
+$arr = $objArr->getArray();
+
+mySplit($arr);
+
+function mySplit($arrOfArticle)
+{
+//    размер строки
+    $maxSize = 250;
+    // создание "анонса" для каждого текста
+    for ($j = 0; $j < count($arrOfArticle); $j++) {
+        // срез строки под нужный размер
+        $temp = mb_substr($arrOfArticle[$j], 0, $maxSize, 'UTF-8');
+//        создание массива слов
+        $words = explode(' ', $temp);
+        //количество слов
+        $wordsCounter = count($words);
+        // получение 3 последних слов
+        $lastThreeWords = implode(' ', array_slice($words, -3));
+        // удаление из анонса 3 последних слов
+        $main = implode(' ', array_slice($words, 0, $wordsCounter - 3));
+        // увеличение id для вывода номера статьи на странице, чтобы не было начало с 0, а то так не красиво
+        $id = $j+1;
+        // формирование строки для вывода анонса с ссылкой для перехода на новую страницу
+        // с помощью id
+        $temp ='<div class="article">
+                    <h3> Статья №'.($id).'</h3>';
+        $temp .= $main . "<a href='article.phtml?id={$id}'> $lastThreeWords...</a><br><br>";
+        $temp .='</div>';
+        echo $temp;
+    }
+}
+
+?>
+</body>
+<style>
+    body{
+        position: absolute;
+        background-color: #ffe9db;
+    }
+    .article{
+        width: 65%;
+        background-color: #a9c6e5;
+        border-radius: 20px;
+        padding: 1%;
+        margin: 2% auto;
+    }
+</style>
+</html>

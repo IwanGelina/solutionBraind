@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<a href="index.phtml" class="but">Назад</a><br>
+<?php
+include_once 'ArrayStorage.php';
+
+// создание объекта и получение массива
+$objArr = new ArrayStorage();
+$arr = $objArr->getArray();
+
+// проверка на наличие id
+if (isset($_GET["id"])) {
+    // если есть, вывод полноной статьи
+    echo '<div class="data">' . $arr[$_GET["id"]-1] . '</div>';
+}
+?>
+</body>
+</html>
+<style>
+    body {
+        margin-top: 2%;
+        background-color: #ffe9db;
+    }
+
+    .data {
+        background-color: #a9c6e5;
+        border-radius: 20px;
+        padding: 1%;
+        margin: 2% auto;
+        width: 95%;
+    }
+
+    .but {
+        padding: 1%;
+        background-color: #efb3b3;
+        font-size: 20px;
+        text-decoration: none;
+        border-radius: 20px;
+        margin-left: 1.5%;
+    }
+</style>
